@@ -40,4 +40,27 @@ fun zipRecycle ([], []) = []
     | zipRecycle ((x :: xs), (y :: ys)) = (x, y) :: zipRecycle (xs, ys);
 
 
+fun bind (SOME x) NONE f = NONE
+    | bind NONE (SOME y) f = NONE
+    | bind NONE NONE f = NONE
+    | bind (SOME x) (SOME y) f = (SOME (f x y));
+
+fun lookup [] key  = NONE
+    | lookup ((s, i) :: li) key =
+    if key = s then SOME i
+    else
+        lookup li key;
+
+fun getitem n [] = NONE
+    | getitem n (x :: xs) = 
+    if n = 1 then SOME x
+    else
+        getitem (n-1) xs;
+
+fun getitem2 NONE li = NONE
+    | getitem2 (SOME n) [] = NONE
+    | getitem2 (SOME n) (x :: xs) =
+    if n = 1 then SOME x
+    else
+        getitem2 (SOME (n-1)) xs;
 
